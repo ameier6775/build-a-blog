@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Build A Blog</h1>
+<form action='/blogs' method='post'>
+    {% if tasks|length == 0 %}
+    <p>No Blog Posts Yet</p>
+    {% else %}
+        <table>
+            {% for blog in blogs %}
+            <tr>
+                <td><h3>{blog.title}</h3></td>
+                <td><p>{blog.content}</p></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</form>
+{% endblock %}
+
+
+
+
