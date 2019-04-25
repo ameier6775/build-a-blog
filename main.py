@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template, session
+from flask import Flask, request, redirect, render_template, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -22,9 +22,6 @@ class Blog(db.Model):
         self.content = content
         self.exist = True
 
-    #def __repr__(self):
-        #return '<Post %r>' % self.title
-
 @app.route('/blogs')
 def get_blogs():
 
@@ -32,34 +29,53 @@ def get_blogs():
 
     return render_template('blogs.html', blogs=blogs)
 
+@app.route('/blog')
+def get_blog():
+    if request.method == 'GET':
+        id = request.args.get('id', type=str)
+        if(id is None):
+            blog = Blog('NA', 'NA')
+            blog.id = 1
+            return render_template('blog.html', id=blog.id, title=blog.title, content=blog.content)
+        elif(id is not None):
+            blog = Blog.query.get(id)
+            return render_template('blog.html', id=blog.id, title=blog.title, content=blog.content)
+
+        
+
+
+
 @app.route('/newpost', methods=['POST', 'GET'])
 def new_post():
-
     title_error = ""
     content_error = ""
-
-    names = []
     errors = []
         
     if request.method == 'POST':
+        
         title = request.form['title']
         content = request.form['content']
-        #blog_id = int(request.form['blog-id'])
-        #blog = Blog.query.get(blog_id)
-        names.append(title)
-        names.append(content)
+
+
         if title == "":
             title_error = "PLEASE ENTER A VALUE"
             errors.append(title_error)
+
         if content == "":
             content_error = "PLEASE ENTER A VALUE"
             errors.append(content_error)
+
         if len(errors) > 0:
+            print(title)
             return render_template('newpost.html', title_error=title_error, content_error=content_error, title=title, content=content) 
+            
+        
         new_blog = Blog(title, content)
         db.session.add(new_blog)
         db.session.commit()
-        return redirect('/blogs')
+        id = request.args.get('id')
+
+        return redirect("http://127.0.0.1:5000/blog?id={}".format(id))
     else:
         return render_template('newpost.html')
 

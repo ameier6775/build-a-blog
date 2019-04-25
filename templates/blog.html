@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class='build-a-blog'>Build A Blog</h1>
+<form action='/blog' method='GET'>
+    <table>
+        <thead class="header-wrapper">
+        <tr>
+            <td><h3 class="header">{{ title }}</h3></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><p>{{ content }}</p></td>
+        </tr>
+    </tbody>
+    </table>
+</form>
+{% endblock %}
+
+
