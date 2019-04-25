@@ -74,8 +74,11 @@ def new_post():
         db.session.add(new_blog)
         db.session.commit()
         id = request.args.get('id')
+        title = request.form['title']
+        content = request.form['content']
 
-        return redirect("http://127.0.0.1:5000/blog?id={}".format(id))
+
+        return render_template('blog.html', title=title, content=content)
     else:
         return render_template('newpost.html')
 

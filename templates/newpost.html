@@ -4,20 +4,20 @@
 <form action='/newpost' method='post'>
     <div class='new-post-body' >
             <label for='title'>Title For Your New Blog:</label>
-            <input class="first" name='title' type='text' value={{title}}>
+            <input class="first" name='title' type='text' value='{{title}}'>
                 {% if title_error %}
                 <p class="error">{{ title_error }}</p>
                 {% endif %}
         </div>
         <div class="new-post-body">
            <label for='content'>Your New Blog: </label>
-           <input class="second" name='content' type='text' value={{content}}>
+           <input class="second" name='content' type='text' value='{{content}}'>
                 {% if content_error %}
                 <p class="error">{{ content_error }}</p>
                 {% endif %}
         </div>
         <div class='button-wrapper'>
-    <input class='submit-button' type='submit' value='Add Entry'>
+    <input class='submit-button' type='submit' value='Add Entry' >
 </div>
 </form>
 {% endblock %}
