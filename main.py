@@ -22,6 +22,10 @@ class Blog(db.Model):
         self.content = content
         self.exist = True
 
+@app.route('/')
+def get_home():
+    return redirect(url_for('get_blogs'))
+
 @app.route('/blogs')
 def get_blogs():
 
