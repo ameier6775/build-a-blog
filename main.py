@@ -29,10 +29,11 @@ def get_blogs():
 
     return render_template('blogs.html', blogs=blogs)
 
-@app.route('/blog')
-def get_blog():
+@app.route('/blog/<id>')
+def get_blog(id):
+    print(id)
     if request.method == 'GET':
-        id = request.args.get('id', type=str)
+        print(id)
         if(id is None):
             blog = Blog('NA', 'NA')
             blog.id = 1
@@ -73,12 +74,8 @@ def new_post():
         new_blog = Blog(title, content)
         db.session.add(new_blog)
         db.session.commit()
-        id = request.args.get('id')
-        title = request.form['title']
-        content = request.form['content']
-
-
-        return render_template('blog.html', title=title, content=content)
+        print(new_blog.id)
+        return redirect(url_for('get_blog' , id=new_blog.id))
     else:
         return render_template('newpost.html')
 
